@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
 
 // No need to create a db in MongoDB; it just does it when you add records
 MongoClient.connect('mongodb://localhost:27017/MyNodeTodoApp', (err, db) => {
