@@ -1,4 +1,8 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectID } = require('mongodb');
+
+// Create new ObjectId
+// const obj = new ObjectID();
+// console.log(obj);
 
 // No need to create a db in MongoDB; it just does it when you add records
 MongoClient.connect('mongodb://localhost:27017/MyNodeTodoApp', (err, db) => {
