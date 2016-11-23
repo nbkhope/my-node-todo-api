@@ -24,10 +24,7 @@ app.post('/todos', (req, res) => {
       res.send(doc);
     }, (error) => {
       // 400 Bad Request
-      res.status(400).send({
-        message: 'Unable to save todo',
-        error
-      });
+      res.status(400).send(error);
     });
 });
 
