@@ -28,6 +28,13 @@ app.post('/todos', (req, res) => {
     });
 });
 
+app.get('/todos', (req, res) => {
+  Todo.find()
+    .then((docs) => {
+      res.send(docs);
+    });
+});
+
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
