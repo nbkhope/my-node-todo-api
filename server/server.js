@@ -32,7 +32,7 @@ app.get('/todos', (req, res) => {
   Todo.find()
     .then((docs) => {
       // send back array inside object for more flexibility
-      res.send({ docs });
+      res.send({ todos: docs });
     }, (e) => {
       res.status(400).send(e);
     });
