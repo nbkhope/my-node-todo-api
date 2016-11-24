@@ -5,6 +5,13 @@ const { app } = require('../server');
 
 const { Todo } = require('../models/todo');
 
+beforeEach((done) => {
+  // Make sure the DB is clean before each test
+  Todo.remove({}).then(() => {
+    done();
+  });
+});
+
 describe('POST /todos', () => {
   it('should create a new todo', (done) => {
     const text = 'Walk the dog';
@@ -22,6 +29,7 @@ describe('POST /todos', () => {
           // return;
         }
 
+        // Make sure todo was saved to the DB
         Todo.find()
           .then((todos) => {
             expect(todos.length).toBe(1);
