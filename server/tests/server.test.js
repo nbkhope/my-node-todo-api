@@ -5,16 +5,28 @@ const { app } = require('../server');
 
 const { Todo } = require('../models/todo');
 
+// dummy todos
+const todos = [
+  {
+    text: 'First test todo'
+  },
+  {
+    text: 'Second test todo'
+  }
+];
+
 beforeEach((done) => {
   // Make sure the DB is clean before each test
   Todo.remove({}).then(() => {
-    done();
-  });
+    // returns a promise
+    return Todo.insertMany(todos);
+  })
+    .then(() => done());
 });
 
 describe('POST /todos', () => {
   it('should create a new todo', (done) => {
-    const text = 'Walk the dog';
+    const text = 'Walk the dog 123456 Yes';
 
     request(app)
       .post('/todos')
@@ -30,7 +42,7 @@ describe('POST /todos', () => {
         }
 
         // Make sure todo was saved to the DB
-        Todo.find()
+        Todo.find({ text })
           .then((todos) => {
             expect(todos.length).toBe(1);
             expect(todos[0].text).toBe(text);
@@ -54,7 +66,7 @@ describe('POST /todos', () => {
 
         // Make sure no todo was saved to the DB
         Todo.find().then((todos) => {
-          expect(todos.length).toBe(0);
+          expect(todos.length).toBe(2);
           done();
         }).catch((e) => done(e));
       });
@@ -62,5 +74,22 @@ describe('POST /todos', () => {
 });
 
 describe ('GET /todos', () => {
+  it('should retrieve all the todos', (done) => {
+    request(app)
+      .get('/todos')
+      .expect(200)
+      .expect((res) => {
+        // expect(res.body.todos).toBeA('array');
+        expect(res.body.todos.length).toBe(2);
+        // expect(res.body.todos).toEqual([]);
+        done();
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
 
+
+      });
+  });
 });
