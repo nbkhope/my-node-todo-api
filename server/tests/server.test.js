@@ -93,3 +93,9 @@ describe ('GET /todos', () => {
       });
   });
 });
+
+describe('GET /todo/:id', () => {
+  it('should retrieve a specific todo by id', (done) => {
+    done();
+  });
+});
