@@ -5,7 +5,7 @@ const router = require('./routes');
 
 const app = express();
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json()); // converts JSON string to JS object
