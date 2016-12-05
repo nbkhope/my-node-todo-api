@@ -44,7 +44,7 @@ module.exports = (app) => {
           return res.status(404).send({ message: 'Todo not found' });
         }
 
-        res.send(todo);
+        res.send({ todo });
       })
       .catch((error) => {
         res.status(400).send();

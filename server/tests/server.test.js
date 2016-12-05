@@ -1,5 +1,6 @@
 const expect = require('expect');
 const request = require('supertest');
+const { ObjectID } = require('mongodb');
 
 const { app } = require('../server');
 
@@ -8,9 +9,11 @@ const { Todo } = require('../models');
 // dummy todos
 const todos = [
   {
+    _id: new ObjectID(),
     text: 'First test todo'
   },
   {
+    _id: new ObjectID(),
     text: 'Second test todo'
   }
 ];
@@ -96,6 +99,16 @@ describe ('GET /todos', () => {
 
 describe('GET /todo/:id', () => {
   it('should retrieve a specific todo by id', (done) => {
-    done();
+    const id = todos[0]._id.toHexString(); // converts ObjectID to string
+    const text = todos[0].text;
+
+    request(app)
+      .get(`/todos/${id}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todo.text).toBe(text);
+      })
+      .end(done)
+      ;
   });
 });
