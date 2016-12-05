@@ -4,7 +4,7 @@ const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
 const { User }  = require('./models/user');
 
-module.exports.router = (app) => {
+module.exports = (app) => {
   app.post('/todos', (req, res) => {
     const todo = new Todo({
       text: req.body.text
