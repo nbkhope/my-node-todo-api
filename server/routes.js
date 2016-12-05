@@ -34,7 +34,7 @@ module.exports = (app) => {
     const { id } = req.params;
 
     if (!ObjectID.isValid(id)) {
-      res.status(400).send({ message: 'Invalid ID' });
+      res.status(404).send({ message: 'Invalid ID' });
       return;
     }
 
