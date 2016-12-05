@@ -1,8 +1,7 @@
 const { ObjectID } = require('mongodb');
 const { mongoose } = require('./db/mongoose');
 
-const { Todo } = require('./models/todo');
-const { User }  = require('./models/user');
+const { Todo, User } = require('./models');
 
 module.exports = (app) => {
   app.post('/todos', (req, res) => {
