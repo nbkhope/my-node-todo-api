@@ -155,7 +155,19 @@ describe('DELETE /todo/:id', () => {
       });
   });
 
-  it('should received the removed todo back as an object', () => {
+  it('should return 404 if todo not found', (done) => {
+    const id = new ObjectID().toHexString();
 
+    request(app)
+      .delete(`/todos/${id}`)
+      .expect(404)
+      .end(done);
+  });
+
+  it('should return 404 if object is is invalid', (done) => {
+    request(app)
+      .delete('/todos/123456')
+      .expect(404)
+      .end(done);
   });
 });
