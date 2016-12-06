@@ -50,4 +50,25 @@ module.exports = (app) => {
         res.status(400).send();
       });
   });
+  
+  app.delete('/todos/:id', (req, res) => {
+    const { id } = req.params;
+
+    if (!ObjectID.isValid(id)) {
+      res.status(404).send();
+      return;
+    }
+
+    Todo.findByIdAndRemove(id)
+    .then((todo) => {
+      if (!todo) {
+        return res.status(404).send({ message: 'Todo not found' });
+      }
+
+      res.send({ todo });
+    })
+    .catch(error => {
+      res.status(400).send();
+    });
+  });
 };

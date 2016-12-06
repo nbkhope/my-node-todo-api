@@ -128,3 +128,34 @@ describe('GET /todo/:id', () => {
       .end(done);
   });
 });
+
+describe('DELETE /todo/:id', () => {
+  it('should remove a todo given the id', (done) => {
+    const id = todos[0]._id.toHexString();
+    const text = todos[0].text;
+
+    request(app)
+      .delete(`/todos/${id}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todo.text).toBe(text);
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        Todo.find().then((todos) => {
+          expect(todos.length).toBe(1);
+          done();
+        })
+        .catch((e) => {
+          done(e);s
+        });
+      });
+  });
+
+  it('should received the removed todo back as an object', () => {
+
+  });
+});
