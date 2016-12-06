@@ -138,6 +138,7 @@ describe('DELETE /todo/:id', () => {
       .delete(`/todos/${id}`)
       .expect(200)
       .expect((res) => {
+        expect(res.body.todo._id).toBe(id);
         expect(res.body.todo.text).toBe(text);
       })
       .end((err, res) => {
@@ -145,13 +146,22 @@ describe('DELETE /todo/:id', () => {
           return done(err);
         }
 
-        Todo.find().then((todos) => {
-          expect(todos.length).toBe(1);
-          done();
-        })
-        .catch((e) => {
-          done(e);s
-        });
+        // Todo.find().then((todos) => {
+        //   expect(todos.length).toBe(1);
+        //   done();
+        // })
+        // .catch((e) => {
+        //   done(e);
+        // })
+        // ;
+
+        Todo.findById(id)
+          .then((todo) => {
+            expect(todo).toNotExist(); // (be null)
+            done();
+          })
+          .catch(e => done(e))
+          ;
       });
   });
 
