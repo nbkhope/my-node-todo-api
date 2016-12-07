@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { ObjectID } = require('mongodb');
 const { mongoose } = require('./db/mongoose');
 
@@ -50,7 +51,7 @@ module.exports = (app) => {
         res.status(400).send();
       });
   });
-  
+
   app.delete('/todos/:id', (req, res) => {
     const { id } = req.params;
 
@@ -70,5 +71,38 @@ module.exports = (app) => {
     .catch(error => {
       res.status(400).send();
     });
+  });
+
+  app.patch('/todos/:id', (req, res) => {
+    const { id } = req.params;
+    // Use lodash to easily filter the properties you need
+    // (and effectively reject all other params)
+    const body = _.pick(req.body, ['text', 'completed']);
+
+    // Check if id is valid
+    if (!ObjectID.isValid(id)) {
+      return res.status(404).send();
+    }
+
+    if (_.isBoolean(body.completed) && body.completed) {
+      // getTime() returns a JS timestamp (in milliseconds!!)
+      body.completedAt = new Date().getTime();
+    }
+    else {
+      body.completed = false;
+      body.completedAt = null;
+    }
+
+    Todo.findByIdAndUpdate(id, { $set: body }, { new: true })
+      .then((todo) => {
+        if (!todo) {
+          return res.status(404).send();
+        }
+
+        res.send({ todo });
+      })
+      .catch((error) => {
+        res.status(400).send();
+      });
   });
 };
