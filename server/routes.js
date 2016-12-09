@@ -105,4 +105,23 @@ module.exports = (app) => {
         res.status(400).send();
       });
   });
+
+  app.post('/users', (req, res) => {
+    // Filter parameters from client
+    const body = _.pick(req.body, ['email', 'password']);
+
+    // Create new user object
+    const user = new User(body);
+
+    console.log(user.attributes);
+
+    user.save()
+      .then(user => {
+        res.send(user);
+      })
+      .catch(error => {
+        // don't send back the whole error object!!
+        res.status(400).send({ error: error.message });
+      });
+  });
 };
