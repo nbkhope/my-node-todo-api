@@ -120,8 +120,11 @@ module.exports = (app) => {
         res.send(user);
       })
       .catch(error => {
+        // for security purposes:
         // don't send back the whole error object!!
-        res.status(400).send({ error: error.message });
+        // but for now, just have it this way
+        // because error object is not consistent
+        res.status(400).send({ error: error });
       });
   });
 };

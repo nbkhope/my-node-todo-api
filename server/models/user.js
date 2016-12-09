@@ -10,6 +10,9 @@ const User = mongoose.model('User', {
     required: true,
     minlength: 3,
     trim: true,
+    // this unique thing ONLY WORKS IF you DROP the collection
+    // uniqueness won't be enforced unless you drop the whole collection
+    // and start from scratch again!!!
     unique: true,
     validate: {
       validator: validator.isEmail,
