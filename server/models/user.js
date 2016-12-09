@@ -15,7 +15,13 @@ const User = mongoose.model('User', {
       validator: validator.isEmail,
       message: '{VALUE} is not a valid email'
     }
-  }
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6
+  },
+  
 });
 
 module.exports = {
