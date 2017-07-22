@@ -1,4 +1,4 @@
-# My Node Todo APIgi
+# My Node Todo API
 
 ## Installation
 
