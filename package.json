@@ -1,6 +1,7 @@
 {
   "name": "my-node-todo-api",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +11,7 @@
     "dev": "nodemon server/server.js"
   },
   "engines": {
-    "node": "7.0.0"
+    "node": "7.10.1"
   },
   "author": "nbkhope",
   "license": "MIT",
